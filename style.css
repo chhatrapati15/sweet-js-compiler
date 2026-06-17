@@ -229,3 +229,6 @@ button:hover{
     display:none;
   }
 }
+.monaco-editor .margin-view-overlays .current-line-exact-margin {
+    border-bottom: 1px solid #8b5cf6;
+}
