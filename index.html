@@ -1,57 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Sweet Js compiler</title>
-    <link rel="stylesheet" href="style.css" />
-    <meta name="color-scheme" content="dark light" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweet JS Compiler</title>
 
+  <link rel="stylesheet" href="./style.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
+</head>
 <body>
 
-    <main class="layout">
-        <section class="editor-pane" aria-label="Code editor">
-            <textarea id="codeinput" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"
-                placeholder="// Please start typing your code"></textarea>
-            <!-- Autocomplete dropdown -->
-            <div id="autocomplete" class="autocomplete hidden" role="listbox" aria-label="Suggestions"></div>
-        </section>
-        <section class="output-pane" aria-label="Program output">
-            <div class="output-header">
-                <span>Console Output</span>
-                <span id="status" class="status idle" aria-live="polite">Idle</span>
-            </div>
-            <pre id="output" class="output" tabindex="0" aria-live="polite"></pre>
-        </section>
-    </main>
-    <!-- Sandbox iframe for isolated execution -->
-    <iframe id="sandbox" title="Execution sandbox" sandbox="allow-scripts" class="sandbox" hidden></iframe>
-    <footer class="app-header">
-        <div class="toolbar" role="toolbar" aria-label="Compiler controls">
-            <button id="run" class="primary" title="Run (Ctrl/Cmd+Enter)">Run ▶</button>
-            <button id="clear" title="Clear code (Alt+C)">Clear</button>
-            <button id="theme" title="Toggle theme">🌓 Theme</button>
-            <label class="toggle">
-                <input type="checkbox" id="autorun" />
-                <span>Auto-run</span>
-            </label>
-            <label class="toggle">
-                <input type="checkbox" id="autocomplete-toggle" checked />
-                <span>Autocomplete</span>
-            </label>
-        </div>
-        <h1>Sweet Js compiler</h1>
-    </footer>
+  <header class="toolbar">
+    <button id="run">▶ Run</button>
+    <button id="clear">Clear</button>
+    <button id="theme">Theme</button>
 
-    <footer class="app-footer">
-        <small>Press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Enter</kbd> to run. Code persists locally. Output is not
-            saved.</small>
-    </footer>
+    <label>
+      <input type="checkbox" id="autorun" />
+      Auto Run
+    </label>
+  </header>
 
-    <script src="./app.js"></script>
+  <main class="layout">
+
+    <section class="editor-pane">
+      <div id="editor"></div>
+    </section>
+
+    <section class="output-pane">
+      <div class="output-header">
+        <h3>Console Output</h3>
+        <span id="status">Idle</span>
+      </div>
+
+      <div id="output"></div>
+    </section>
+
+  </main>
+
+  <iframe
+    id="sandbox"
+    sandbox="allow-scripts"
+    hidden
+  ></iframe>
+
+  <script src="./app.js"></script>
+
 </body>
-
 </html>
