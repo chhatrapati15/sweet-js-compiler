@@ -18,8 +18,12 @@ let debounceId = null;
 let isDark =
   localStorage.getItem(THEME_KEY) !== "light";
 
-function setStatus(text) {
+function setStatus(text, color) {
   els.status.textContent = text;
+
+  if (color) {
+    els.status.style.color = color;
+  }
 }
 
 function clearOutput() {
@@ -48,17 +52,18 @@ function saveCode() {
   } catch {}
 }
 
+function getDefaultCode() {
+  return `console.log("Hello World");`;
+}
+
 function loadCode() {
   try {
     return (
       localStorage.getItem(STORAGE_KEY) ||
-      `// Welcome to Sweet JS Compiler
-
-console.log("Hello World");
-`
+      getDefaultCode()
     );
   } catch {
-    return `console.log("Hello World")`;
+    return getDefaultCode();
   }
 }
 
@@ -83,10 +88,12 @@ require(["vs/editor/editor.main"], () => {
       automaticLayout: true,
 
       minimap: {
-        enabled: true,
+        enabled: false,
       },
 
-      fontSize: 14,
+      fontSize: 16,
+
+      lineHeight: 28,
 
       tabSize: 2,
 
@@ -98,27 +105,35 @@ require(["vs/editor/editor.main"], () => {
 
       cursorSmoothCaretAnimation: "on",
 
-      formatOnPaste: true,
-
-      formatOnType: true,
-
       roundedSelection: true,
 
       scrollBeyondLastLine: false,
+
+      renderLineHighlight: "gutter",
+
+      overviewRulerBorder: false,
+
+      showFoldingControls: "never",
+
+      scrollbar: {
+        verticalScrollbarSize: 8,
+        horizontalScrollbarSize: 8,
+      },
     }
   );
 
   editor.onDidChangeModelContent(() => {
     saveCode();
 
-    if (!els.autorun.checked) return;
+    if (!els.autorun.checked) {
+      return;
+    }
 
     clearTimeout(debounceId);
 
-    debounceId = setTimeout(
-      runCode,
-      800
-    );
+    debounceId = setTimeout(() => {
+      runCode();
+    }, 700);
   });
 
   editor.addCommand(
@@ -136,13 +151,19 @@ function runCode() {
   const code = editor.getValue();
 
   if (!code.trim()) {
-    setStatus("Nothing to Run");
+    setStatus(
+      "Nothing to run",
+      "#f59e0b"
+    );
     return;
   }
 
   clearOutput();
 
-  setStatus("Running...");
+  setStatus(
+    "Running...",
+    "#3b82f6"
+  );
 
   const sandboxDoc = `
 <!DOCTYPE html>
@@ -191,24 +212,29 @@ return val;
 }
 
 ["log","warn","error","info"]
-.forEach(method => {
+.forEach(method=>{
 
 const original =
 console[method];
 
 console[method] =
-(...args) => {
+(...args)=>{
 
 const output =
-args.map(arg => {
+args.map(arg=>{
 
-if(typeof arg === "object"){
+if(
+typeof arg === "object"
+){
+
 return safeStringify(arg);
+
 }
 
 return String(arg);
 
-}).join(" ");
+})
+.join(" ");
 
 send(
 method,
@@ -224,7 +250,7 @@ args
 
 });
 
-try {
+try{
 
 const fn =
 new Function(\`
@@ -288,14 +314,25 @@ window.addEventListener(
   (event) => {
     const data = event.data;
 
-    if (!data?.type) return;
+    if (!data?.type) {
+      return;
+    }
 
     if (data.type === "done") {
-      setStatus(
+      if (
         data.msg === "success"
-          ? "Completed"
-          : "Error"
-      );
+      ) {
+        setStatus(
+          "Completed",
+          "#34d399"
+        );
+      } else {
+        setStatus(
+          "Error",
+          "#ef4444"
+        );
+      }
+
       return;
     }
 
@@ -320,7 +357,10 @@ els.clear.addEventListener(
 
     clearOutput();
 
-    setStatus("Cleared");
+    setStatus(
+      "Cleared",
+      "#9ca3af"
+    );
   }
 );
 
@@ -344,4 +384,7 @@ els.theme.addEventListener(
   }
 );
 
-setStatus("Ready");
+setStatus(
+  "Ready",
+  "#34d399"
+);
