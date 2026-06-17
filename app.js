@@ -99,11 +99,11 @@ require(["vs/editor/editor.main"], () => {
 
       wordWrap: "on",
 
-      smoothScrolling: true,
+      smoothScrolling: false,
 
-      cursorBlinking: "smooth",
+      cursorBlinking: "blink",
 
-      cursorSmoothCaretAnimation: "on",
+      cursorSmoothCaretAnimation: "off",
 
       roundedSelection: true,
 
