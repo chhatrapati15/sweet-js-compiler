@@ -2,47 +2,90 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
   <title>Sweet JS Compiler</title>
 
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="style.css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
 </head>
+
 <body>
 
-  <header class="toolbar">
-    <button id="run">▶ Run</button>
-    <button id="clear">Clear</button>
-    <button id="theme">Theme</button>
+  <div class="app">
 
-    <label>
-      <input type="checkbox" id="autorun" />
-      Auto Run
-    </label>
-  </header>
+    <main class="workspace">
 
-  <main class="layout">
+      <section class="editor-card">
 
-    <section class="editor-pane">
-      <div id="editor"></div>
-    </section>
+        <div class="editor-header">
+          <div class="brand">
+            <div class="logo"></div>
+            <h2>Sweet JS</h2>
+          </div>
 
-    <section class="output-pane">
-      <div class="output-header">
-        <h3>Console Output</h3>
-        <span id="status">Idle</span>
-      </div>
+          <div class="editor-status">
+            JavaScript Runtime
+          </div>
+        </div>
 
-      <div id="output"></div>
-    </section>
+        <div id="editor"></div>
 
-  </main>
+      </section>
+
+      <section class="console-card">
+
+        <div class="console-header">
+          <h3>Console</h3>
+
+          <span id="status">
+            Idle
+          </span>
+        </div>
+
+        <div id="output"></div>
+
+      </section>
+
+    </main>
+
+    <div class="floating-actions">
+
+      <button id="clear">
+        Clear
+      </button>
+
+      <button id="theme">
+        Theme
+      </button>
+
+      <label class="switch">
+        <input
+          type="checkbox"
+          id="autorun"
+        />
+        <span>Auto</span>
+      </label>
+
+      <button
+        id="run"
+        class="run-btn"
+      >
+        ▶ Run
+      </button>
+
+    </div>
+
+  </div>
 
   <iframe
     id="sandbox"
-    sandbox="allow-scripts"
     hidden
+    sandbox="allow-scripts"
   ></iframe>
 
   <script src="./app.js"></script>
