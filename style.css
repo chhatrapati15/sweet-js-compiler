@@ -216,7 +216,7 @@ button:hover{
 .monaco-editor,
 .monaco-editor-background,
 .monaco-editor .margin{
-  background:#0f172a !important;
+  background:#1e1e1e !important;
 }
 
 @media(max-width:900px){
